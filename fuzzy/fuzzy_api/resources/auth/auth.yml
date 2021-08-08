@@ -1,0 +1,24 @@
+Authenticate a user
+---
+tags:
+  - users
+parameters:
+  - in: body
+    name: Credentials
+    schema:
+      id: Auth
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+responses:
+  200:
+    description: Succes login!
+  401:
+    description: Unauthorized!
+  500:
+    description: error in agdatabox server

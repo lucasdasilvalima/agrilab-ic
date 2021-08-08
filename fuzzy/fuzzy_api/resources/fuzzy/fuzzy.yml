@@ -1,0 +1,46 @@
+Authenticate a user
+---
+tags:
+  - fuzzy
+parameters:
+  - in: body
+    name: Parameters Fuzzy
+    schema:
+      id: Data
+      required:
+        - data
+        - clusters
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/definitions/sample'
+          description: Lista de amostras
+        clusters:
+          type: array
+          items:
+            $ref: '#/definitions/sample'
+        qty_sensors:
+          type: number
+        limit:
+          type: number
+definitions:
+  sample:
+    type: object
+    properties:
+      lat:
+        type: number
+      long:
+        type: number
+      samples:
+        type: array
+        items:
+          $ref: '#/definitions/samples'
+  samples:
+    type: object
+    properties:
+      sample_desc:
+        type: number
+responses:
+  200:
+    description: Resultado da logica fuzzy

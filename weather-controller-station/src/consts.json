@@ -1,0 +1,52 @@
+{
+  "temperature": {
+    "unitOfMeasurement": 44,
+    "dataTypeId": 94,
+    "deviceId": 121
+  },
+  "atm_pressure": {
+    "unitOfMeasurement": 45,
+    "dataTypeId": 128,
+    "deviceId": 166
+  },
+  "altitude": {
+    "unitOfMeasurement": 46,
+    "dataTypeId": 129,
+    "deviceId": 167
+  },
+  "sea_pressure": {
+    "unitOfMeasurement": 47,
+    "dataTypeId": 130,
+    "deviceId": 168
+  },
+  "humidity": {
+    "unitOfMeasurement": 48,
+    "dataTypeId": 131,
+    "deviceId": 169
+  },
+  "wind_speed": {
+    "unitOfMeasurement": 49,
+    "dataTypeId": 132,
+    "deviceId": 170
+  },
+  "rain_level": {
+    "unitOfMeasurement": 50,
+    "dataTypeId": 133,
+    "deviceId": 171
+  },
+  "wind_direction": {
+    "unitOfMeasurement": 51,
+    "dataTypeId": 134,
+    "deviceId": 172
+  },
+  "uv_level": {
+    "unitOfMeasurement": 52,
+    "dataTypeId": 135,
+    "deviceId": 173
+  },
+  "soil_humidity": {
+    "unitOfMeasurement": 48,
+    "dataTypeId": 136,
+    "deviceId": 174
+  }
+}

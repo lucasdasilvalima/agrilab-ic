@@ -1,0 +1,9 @@
+flask
+flask-restful
+flask-restplus
+flasgger
+requests
+config
+python-dotenv
+pandas
+numpy
