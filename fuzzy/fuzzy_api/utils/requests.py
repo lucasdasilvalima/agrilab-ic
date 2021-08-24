@@ -23,7 +23,7 @@ class SingletonMeta(type):
 
 class Req(metaclass=SingletonMeta):
    def __init__(self):
-      self.auth_key = ""
+      self.auth_key = "eyJhbGciOiJIUzUxMiJ9.eyJwZXJtcyI6e30sImlkIjoiMTk3IiwiZXhwIjoxNjI5OTAwNjQwfQ.froSAbbvG6sv5wnzs0HJRzhbPijhXWGKt5xnSVJ3o2zNOwxJ1EgH2f_gC-a5YIGPBMeK-y6sI1HGsLMSg_nz5A"
       self.isAtuhenticated = False
       self.url_base = os.getenv('URL_API')
 
@@ -51,6 +51,32 @@ class Req(metaclass=SingletonMeta):
          self.isAtuhenticated = True
 
       return {"Authorization": response.text}, response.status_code
+
+   def get_sample(self, sample_id):
+
+      url = self.url_base + self.routes["sample"]
+
+      response = requests.get(url.replace('id', str(sample_id['id'])), headers=self.headers, verify=False)
+      if response.status_code == 200:
+         try:
+            return response.json()
+         except:
+            return {"warn": "response not valid"}
+
+      return {"error": response.text}
+
+   def get_samples(self, sample_id):
+
+      url = self.url_base + self.routes["samples"]
+      
+      response = requests.get(url.replace('id', str(sample_id['id'])), headers=self.headers, verify=False)
+      if response.status_code == 200:
+         try:
+            return response.json()
+         except:
+            return {"warn": "response not valid"}
+
+      return {"error": response.text}
 
    def validate_auth(self):
       url = self.url_base + self.routes["person"]

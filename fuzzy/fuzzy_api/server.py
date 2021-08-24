@@ -52,9 +52,11 @@ api = Api(app)
 
 auth = Authenticate.Auth
 fuzzy = Fuzzy.Fuzzy
+fuzzyid = Fuzzy.FuzzyById
 
 api.add_resource(auth, '/auth')
 api.add_resource(fuzzy, '/fuzzy')
+api.add_resource(fuzzyid, '/fuzzy/id')
 
 if __name__ == "__main__":
     app.run(debug=True)

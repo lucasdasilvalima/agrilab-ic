@@ -1,4 +1,7 @@
+from pandas.core.frame import DataFrame
+from requests.api import delete
 from constants import ALMOST_ZERO
+from functools import reduce
 
 import pandas as pd
 import numpy as np
@@ -35,7 +38,8 @@ class Fuzzy:
     def fuzzy3(self, data, clusters):
         arr_fpi = {}
         arr_mpe = {}
-
+        print(type(clusters))
+        print(clusters)
         for indice, cluster in enumerate(clusters):
             dists = pd.DataFrame()
             for indice, row in cluster.iterrows():
@@ -68,6 +72,27 @@ class Fuzzy:
     def load_raw_data(self):
         self.data_frame = pd.DataFrame(self.raw_data)
 
+    def read_sample_from_api(self, data):
+        if not data:
+            return None
+        data = {'value': [data['value']], 'geometry': [data['geometry']]}
+        df = pd.DataFrame(data)
+        df['geometry'] = df['geometry'].str.split(
+            'POINT', n=1, expand=True)[1].str[1:-1]
+        df.set_index('geometry', inplace=True)
+        return df
+
+    def read_samples_from_api(self, data):
+        if not data:
+            return None
+
+        df = pd.DataFrame(data)
+        df = df.get(['value', 'geometry'])
+        df['geometry'] = df['geometry'].str.split(
+            'POINT', n=1, expand=True)[1].str[1:-1]
+        df.set_index('geometry', inplace=True)
+        return df
+
     def normalize_data(self):
         self.load_raw_data()
         normalize = self.data_frame
@@ -82,6 +107,11 @@ class Fuzzy:
                 {'max': max_value, 'min': min_value, 'variance': variance, 'column': x})
             normalize[x] = (normalize[x] - min_value) / (variance)
         return normalize, array_centroid
+
+    def get_data_and_clusters(self, data, clusters):
+        return (reduce(lambda left, right: pd.merge(
+            left, right, right_index=True, left_index=True), data)), [(reduce(lambda left, right: pd.merge(left, right,
+                                                                                                          right_index=True, left_index=True), clusters))]
 
     def extract_data_and_clusters(self, r_data):
         data = r_data["data"]
