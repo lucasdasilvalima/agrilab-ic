@@ -1,3 +1,24 @@
-TODO
-
-Arrumar as sample e sampling validar os end points e fazer o metodo funcionar redondo
+{
+  "clusters": [
+    {
+      "desc": "ferro",
+      "id": 101
+    },
+    {
+      "desc": "manganes",
+      "id": 1201
+    }
+  ],
+  "data": [
+    {
+      "desc": "ferro",
+      "id": 1
+    },
+    {
+      "desc": "manganes",
+      "id": 12
+    }
+  ],
+  "limit": 1,
+  "qty_sensors": 1
+}
