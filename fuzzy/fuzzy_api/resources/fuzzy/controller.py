@@ -39,7 +39,7 @@ class FuzzyById(Resource):
 
         qty_sensors = _request["qty_sensors"]
         limit = _request["limit"]
-        samples = self.fuzzy_method.create_samples(data, qty_of_sensors=qty_sensors, limit=limit)
+        samples = self.fuzzy_method.create_samples(clusters, qty_of_sensors=qty_sensors, limit=limit)
         try:
             per, fpi, mpe = self.fuzzy_method.fuzzy3(data, samples)#clusters)
             return {"pertinencias": per, "fpi": fpi, "mpe": mpe}

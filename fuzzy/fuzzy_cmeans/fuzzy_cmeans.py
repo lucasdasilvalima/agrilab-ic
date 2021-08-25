@@ -1,3 +1,4 @@
+from os import replace
 from pandas.core.frame import DataFrame
 from requests.api import delete
 from constants import ALMOST_ZERO
@@ -40,7 +41,7 @@ class Fuzzy:
         arr_mpe = {}
         arr_per = {}
         print(len(clusters))
-        for indice, cluster in enumerate(clusters):
+        for index, cluster in enumerate(clusters):
             dists = pd.DataFrame()
             for indice, row in cluster.iterrows():
                 dist = pd.DataFrame()
@@ -64,9 +65,9 @@ class Fuzzy:
 
             fpi_index = self.fpi(pertinence)
             mpe_index = self.mpe(pertinence)
-            arr_per[indice] = pertinence.to_json(orient='records')
-            arr_fpi[indice] = fpi_index
-            arr_mpe[indice] = mpe_index
+            arr_per[index] = pertinence.to_json(orient='records')
+            arr_fpi[index] = fpi_index
+            arr_mpe[index] = mpe_index
 
         return arr_per, arr_fpi, arr_mpe
 
@@ -112,8 +113,8 @@ class Fuzzy:
 
     def get_data_and_clusters(self, data, clusters):
         return (reduce(lambda left, right: pd.merge(
-            left, right, right_index=True, left_index=True), data)), [(reduce(lambda left, right: pd.merge(left, right,
-                                                                                                          right_index=True, left_index=True), clusters))]
+            left, right, right_index=True, left_index=True), data)), (reduce(lambda left, right: pd.merge(left, right,
+                                                                                                          right_index=True, left_index=True), clusters))
 
     def extract_data_and_clusters(self, r_data):
         data = r_data["data"]
@@ -143,8 +144,9 @@ class Fuzzy:
 
         return self.raw_data
 
-    def create_samples(self, data, qty_of_sensors=3, limit=100):
+    def create_samples(self, data, qty_of_sensors=-1, limit=-1):
         samples = []
-        for _ in range(limit):
-            samples.append(data.sample(qty_of_sensors))
+        for _ in range(qty_of_sensors):
+            print(samples)
+            samples.append(data.sample(limit, replace=True))
         return samples
