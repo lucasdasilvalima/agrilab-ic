@@ -38,7 +38,7 @@ class Fuzzy:
     def fuzzy3(self, data, clusters, qty_sensors=-1):
         arr_fpi = {}
         arr_mpe = {}
-        
+        arr_per = {}
         print(len(clusters))
         for indice, cluster in enumerate(clusters):
             dists = pd.DataFrame()
@@ -64,10 +64,11 @@ class Fuzzy:
 
             fpi_index = self.fpi(pertinence)
             mpe_index = self.mpe(pertinence)
+            arr_per[indice] = pertinence.to_json(orient='records')
             arr_fpi[indice] = fpi_index
             arr_mpe[indice] = mpe_index
 
-        return arr_fpi, arr_mpe
+        return arr_per, arr_fpi, arr_mpe
 
     def load_raw_data(self):
         self.data_frame = pd.DataFrame(self.raw_data)
