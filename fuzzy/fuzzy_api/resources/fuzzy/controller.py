@@ -13,27 +13,31 @@ class FuzzyById(Resource):
 
     @swag_from('fuzzy_id.yml', validation=True)
     def post(self):
-        # if not self.reqs.isAtuhenticated:
-        #    return {"error": "You need singin first!"}, 401
-        # if not self.reqs.validate_auth():
-        #    return {"error": "Your token is invalid!"}, 401
+        if not self.reqs.isAtuhenticated:
+            return {"error": "You need singin first!"}, 401
+        if not self.reqs.validate_auth():
+            return {"error": "Your token is invalid!"}, 401
 
-        r = request.json
+        _request = request.json
 
         clusters = []
-        for sample_id in r["clusters"]:
-            a = self.reqs.get_sample(sample_id)
-            clusters.append(self.fuzzy_method.read_sample_from_api(a))
+        for sample_id in _request["clusters"]:
+            response, status = self.reqs.get_sample(sample_id)
+            if status != 200:
+                return response
+            clusters.append(self.fuzzy_method.read_sample_from_api(response))
 
         data = []
-        for sample_id in r["data"]:
-            a = self.reqs.get_samples(sample_id)
-            data.append(self.fuzzy_method.read_samples_from_api(a))
+        for sample_id in _request["data"]:
+            response, status = self.reqs.get_samples(sample_id)
+            if status != 200:
+                return response
+            data.append(self.fuzzy_method.read_samples_from_api(response))
 
         data, clusters = self.fuzzy_method.get_data_and_clusters(
             data, clusters)
-        limit = r["limit"]
-        qty_sensors = r["qty_sensors"]
+        limit = _request["limit"]
+        qty_sensors = _request["qty_sensors"]
 
         try:
             fpi, mpe = self.fuzzy_method.fuzzy3(data, clusters)
@@ -64,4 +68,4 @@ class Fuzzy(Resource):
             return {"fpi": fpi, "mpe": mpe}
         except Exception as e:
             print(e)
-            return {"error": str(e)}, 500
+            return {"error": str(e)}, 501

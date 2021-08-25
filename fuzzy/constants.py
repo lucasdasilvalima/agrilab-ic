@@ -2,7 +2,7 @@ ALMOST_ZERO = 0.000000000000000000000000001
 
 DEFAULT_AGDATABOX_ROUTES = {
     "authenticate": "/auth/login",
-    "person": "/person",
+    "person":  "/person",
     "samples": "/sampling/id/sample",
-    "sample": "/sampling/sample/id"
+    "sample":  "/sampling/sample/id"
 }

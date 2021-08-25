@@ -75,6 +75,7 @@ class Fuzzy:
     def read_sample_from_api(self, data):
         if not data:
             return None
+
         data = {'value': [data['value']], 'geometry': [data['geometry']]}
         df = pd.DataFrame(data)
         df['geometry'] = df['geometry'].str.split(
