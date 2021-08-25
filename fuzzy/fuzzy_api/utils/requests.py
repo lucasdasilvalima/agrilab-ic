@@ -52,7 +52,6 @@ class Req(metaclass=SingletonMeta):
       
       if route:
          url = self.url_base + route.replace('id', str(sample_id['id']))
-         print(url)
          response = requests.get(url, headers=self.headers, verify=False)
 
          return response.json(), response.status_code

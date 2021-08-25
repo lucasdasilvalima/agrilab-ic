@@ -35,11 +35,11 @@ class Fuzzy:
         fpi *= (1 - pertinences.sum().sum())
         return fpi
 
-    def fuzzy3(self, data, clusters):
+    def fuzzy3(self, data, clusters, qty_sensors=-1):
         arr_fpi = {}
         arr_mpe = {}
-        print(type(clusters))
-        print(clusters)
+        
+        print(len(clusters))
         for indice, cluster in enumerate(clusters):
             dists = pd.DataFrame()
             for indice, row in cluster.iterrows():
@@ -128,7 +128,7 @@ class Fuzzy:
             raw_data.append(pd.DataFrame(
                 values, index=[str(i["lat"]) + ", " + str(i["long"])]))
 
-            return raw_data
+        return raw_data
 
     def extract_data_frame(self, data):
         self.raw_data = pd.DataFrame()

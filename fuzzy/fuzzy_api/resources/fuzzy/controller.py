@@ -21,11 +21,20 @@ class FuzzyById(Resource):
         _request = request.json
 
         clusters = []
-        for sample_id in _request["clusters"]:
-            response, status = self.reqs.get_sample(sample_id)
-            if status != 200:
-                return response
-            clusters.append(self.fuzzy_method.read_sample_from_api(response))
+        qty_sensors = _request["qty_sensors"]
+        if qty_sensors > len(_request['clusters']):
+            for _ in range(qty_sensors):
+                for sample_id in _request["clusters"]:
+                    response, status = self.reqs.get_sample(sample_id)
+                    if status != 200:
+                        return response
+                    clusters.append(self.fuzzy_method.read_sample_from_api(response))
+        else:
+            for sample_id in _request["clusters"]:
+                    response, status = self.reqs.get_sample(sample_id)
+                    if status != 200:
+                        return response
+                    clusters.append(self.fuzzy_method.read_sample_from_api(response))
 
         data = []
         for sample_id in _request["data"]:
@@ -36,8 +45,10 @@ class FuzzyById(Resource):
 
         data, clusters = self.fuzzy_method.get_data_and_clusters(
             data, clusters)
+        # Necessario se ao inves de passar os clusters quiser que eles sejam gerados automatixamente 
+        # obsoleto por enquanto
         limit = _request["limit"]
-        qty_sensors = _request["qty_sensors"]
+        
 
         try:
             fpi, mpe = self.fuzzy_method.fuzzy3(data, clusters)
@@ -62,7 +73,7 @@ class Fuzzy(Resource):
         r = request.json
 
         data, clusters = self.fuzzy_method.extract_data_and_clusters(r)
-        print(data, clusters)
+        print(f"clusters: {clusters}")
         try:
             fpi, mpe = self.fuzzy_method.fuzzy3(data, clusters)
             return {"fpi": fpi, "mpe": mpe}
