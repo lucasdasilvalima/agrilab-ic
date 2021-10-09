@@ -16,7 +16,6 @@ class FuzzyById(Resource):
         _request = request.json
 
         api_key = request.headers.get("Authorization")
-        print(api_key)
         if not self.reqs.isAtuhenticated and (api_key == None):
             return {"error": "You need singin first!"}, 401
         
@@ -61,10 +60,14 @@ class Fuzzy(Resource):
 
     @swag_from('fuzzy.yml', validation=True)
     def post(self):
-        if not self.reqs.isAtuhenticated:
-            return {"error": "You need singin first!"}, 500
+        api_key = request.headers.get("Authorization")
+        if not self.reqs.isAtuhenticated and (api_key == None):
+            return {"error": "You need singin first!"}, 401
+        
+        self.reqs.auth_key = api_key
+
         if not self.reqs.validate_auth():
-            return {"error": "Your token is invalid!"}, 500
+            return {"error": "Your token is invalid!"}, 401
 
         r = request.json
 
