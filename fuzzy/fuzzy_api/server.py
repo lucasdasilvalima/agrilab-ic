@@ -5,12 +5,13 @@ from fuzzy_api.resources.auth     import controller as Authenticate
 from flask_restful                import Api
 from flasgger                     import Swagger
 from flask                        import Flask
+from flask_cors                   import CORS, cross_origin
 
 import config
 
 # Setup Flask Server
 app = Flask(__name__)
-
+cors = CORS(app, support_credentials=True)
 # Create an APISpec
 template = {
     "swagger": "2.0",

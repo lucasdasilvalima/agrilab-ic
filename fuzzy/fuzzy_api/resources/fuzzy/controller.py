@@ -13,12 +13,18 @@ class FuzzyById(Resource):
 
     @swag_from('fuzzy_id.yml', validation=True)
     def post(self):
-        if not self.reqs.isAtuhenticated:
+        _request = request.json
+
+        api_key = request.headers.get("Authorization")
+        print(api_key)
+        if not self.reqs.isAtuhenticated and (api_key == None):
             return {"error": "You need singin first!"}, 401
+        
+        self.reqs.auth_key = api_key
+
         if not self.reqs.validate_auth():
             return {"error": "Your token is invalid!"}, 401
 
-        _request = request.json
 
         clusters = []
         for sample_id in _request["clusters"]:

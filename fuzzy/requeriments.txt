@@ -2,6 +2,7 @@ setuptools
 flask
 flask-restful
 flask-restplus
+flask-cors
 flasgger
 requests
 config
