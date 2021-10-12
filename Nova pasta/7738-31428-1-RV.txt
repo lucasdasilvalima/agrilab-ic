@@ -1,0 +1,6 @@
+Retirar a titulação do nome do segundo autor ("Dr")
+
+No rodapé da primeira página, substituir a palavra "aluno" por 
+"bolsista" ou "voluntário"
+
+Título da seção 2: Método (retirar o que está entre parênteses)

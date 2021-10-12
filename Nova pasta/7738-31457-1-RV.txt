@@ -1,0 +1,40 @@
+SICITE_2020_1 - Algoritmos Fuzzy aplicados a seleção de locais propícios para
+instalação de sensores.
+
+O texto ainda precisa ser revisado para corrigir erros de ortografia, concordância e formatação.
+
+Os autores poderiam incluir mais informações a respeito do método para justificar a sua seleção na Introdução. Por que esse método é adequado para o problema mencionado de posicionamento de sensores? Também poderia incluir uma definição do método na seção 2.
+
+O que são os índices FPI e MPE mencionados na Figura 1? Eles só são mencionados no texto no final da seção e não são explicados.
+
+Observar um código pronto, como da Figura 2, não permite que o leitor compreenda como o cálculo funciona. A explicação de como o cálculo funciona precisa ser feita por meio do texto e a figura deve ser apenas uma forma de auxiliar no entendimento.
+
+O que é o AGRIDATABOX? Poderiam ser dadas mais informações para contextualizar melhor o trabalho.
+
+Não está muito claro quais são os dados que devem ser enviados para a API ou como é a resposa da API com as posições dos sensores ou como essas posições se relacionam com os índices FPI e MPE. Acredito que poderia ser adicionado um exemplo para deixar o resultado mais claro.
+
+Acredito que não deveria ter um ponto final no título.
+
+Também é incomum encontrar referências no resumo.
+
+Acredito que você quis dizer "O uso deste método" ao invés de "O uso este método".
+
+O que significa um "resultado satisfatório"? Me parece um pouco vago. Poderia ser apresentada alguma métrica que representasse o desempenho do método.
+
+Termos estrangeiros deveriam estar em itálico.
+
+Há erros de digitação em "méto", "AGDATABOX", "bordagem", "inciar", "enderenços".
+
+Acredito que você quis dizer "para instalação de sensores no campo" ao invés de "para instalação de sensores à campo".
+
+Acredito que você quis dizer "desenvolvimento vegetativo das plantas" ao invés de "desenvolvimento vegetativa das plantas".
+
+É preciso tomar um pouco de cuidado na escolha dos termos a serem usados em uma publicação de caráter científico pois se espera uma maior objetividade do autor. Por exemplo, sugiro evitar o uso do advérbio "importantíssimo" se a argumentação para ele não estiver presente no texto.
+
+O título da segunda seção deveria ser "MÉTODO" ou "PROCEDIMENTOS OPERACIONAIS DA PESQUISA" e não manter as duas opções.
+
+É necessário uma referência para a afirmação de que Python possui um desempenho superior à PL SQL.
+
+A legenda das Figuras deveria ser posicionada acima delas e não abaixo. Também faltou adicionar o ano à fonte de Autoria própria como (2021).
+
+Acredito que você quis dizer "ajuda os usuário a entenderem" ao invés de "ajuda os usuários entender".

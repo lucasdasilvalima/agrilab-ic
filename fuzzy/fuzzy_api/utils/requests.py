@@ -68,9 +68,11 @@ class Req(metaclass=SingletonMeta):
 
       return {"status": "yours environment variables is not be set correctly"}, 301
 
-   def validate_auth(self):
+   def validate_auth(self, authkey=None):
       route = self.routes["person"]
-
+      if authkey:
+         self.headers['Authorization'] = authkey
+         self.auth_key = authkey
       if route:
          url = self.url_base + route
          response = requests.get(url, headers=self.headers, verify=False)
