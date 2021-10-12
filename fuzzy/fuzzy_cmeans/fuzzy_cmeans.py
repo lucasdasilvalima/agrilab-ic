@@ -12,9 +12,9 @@ class Fuzzy:
     def __init__(self):
         self.zero = ALMOST_ZERO
 
-    def mpe(self, pertinences):
-        qty_of_cluster = len(pertinences)
-        sample_size = len(pertinences.columns)
+    def mpe(self, pertinences, qty_of_cluster, sample_size):
+        # qty_of_cluster = len(pertinences)
+        # sample_size = len(pertinences.columns)
 
         for c in pertinences.columns:
             pertinences[c] = (
@@ -24,10 +24,10 @@ class Fuzzy:
         mpe /= np.log10(qty_of_cluster)
         return mpe
 
-    def fpi(self, pertinences):
+    def fpi(self, pertinences, qty_of_cluster, sample_size):
 
-        qty_of_cluster = len(pertinences)
-        sample_size = len(pertinences.columns)
+        # qty_of_cluster = len(pertinences)
+        # sample_size = len(pertinences.columns)
 
         for c in pertinences.columns:
             pertinences[c] = np.power(pertinences[c], 2)/sample_size
@@ -36,11 +36,47 @@ class Fuzzy:
         fpi *= (1 - pertinences.sum().sum())
         return fpi
 
-    def fuzzy3(self, data, clusters, qty_sensors=-1):
-        arr_fpi = {}
-        arr_mpe = {}
+    # def fuzzy3(self, data, clusters, qty_sensors=-1):
+    #     arr_fpi = {}
+    #     arr_mpe = {}
         
-        for index, cluster in enumerate(clusters):
+    #     for index, cluster in enumerate(clusters):
+    #         dists = pd.DataFrame()
+    #         for indice, row in cluster.iterrows():
+    #             dist = pd.DataFrame()
+    #             for x in data.columns:
+    #                 dist[x] = data[x]-row[x]
+    #                 dist[x] = np.power(dist[x], 2)
+
+    #             dist = dist.sum(axis=1)
+    #             dist = dist.replace(0, self.zero)
+    #             dists[indice] = np.sqrt(dist)
+    #         pertinence = pd.DataFrame()
+
+    #         for columns in dists.columns:
+    #             pertinences = pd.DataFrame()
+    #             for columns_aux in dists.columns:
+    #                 pertinences[columns_aux] = np.power(
+    #                     (dists[columns] / dists[columns_aux]), (1.0/3.0))
+
+    #             pertinence[columns] = pertinences.sum(axis=1)
+    #             pertinence[columns] = np.power(pertinence[columns], -1.0)
+
+    #         fpi_index = self.fpi(pertinence)
+    #         mpe_index = self.mpe(pertinence)
+
+    #         arr_fpi[index] = fpi_index
+    #         arr_mpe[index] = mpe_index
+
+    #     return arr_fpi, arr_mpe
+
+    def fuzzy3(self, data, clusters, qty_of_cluster, sample_size, nomal=False):
+        if nomal:
+            data, _ = self.normalize_data(data)
+        arr_fpi = {}#pd.DataFrame()
+        arr_mpe = {}#pd.DataFrame()
+        
+        for indice, cluster in enumerate(clusters):
             dists = pd.DataFrame()
             for indice, row in cluster.iterrows():
                 dist = pd.DataFrame()
@@ -58,17 +94,19 @@ class Fuzzy:
                 for columns_aux in dists.columns:
                     pertinences[columns_aux] = np.power(
                         (dists[columns] / dists[columns_aux]), (1.0/3.0))
-
+               
+                pertinences = pertinences.replace(0, self.zero)
                 pertinence[columns] = pertinences.sum(axis=1)
                 pertinence[columns] = np.power(pertinence[columns], -1.0)
 
-            fpi_index = self.fpi(pertinence)
-            mpe_index = self.mpe(pertinence)
+            fpi_index = self.fpi(pertinence, qty_of_cluster, sample_size)
+            mpe_index = self.mpe(pertinence, qty_of_cluster, sample_size)
 
-            arr_fpi[index] = fpi_index
-            arr_mpe[index] = mpe_index
-
+            arr_fpi[str(indice)] = fpi_index
+            arr_mpe[str(indice)] = mpe_index
+        
         return arr_fpi, arr_mpe
+
 
     def load_raw_data(self):
         self.data_frame = pd.DataFrame(self.raw_data)
@@ -95,9 +133,9 @@ class Fuzzy:
         df.set_index('geometry', inplace=True)
         return df
 
-    def normalize_data(self):
-        self.load_raw_data()
-        normalize = self.data_frame
+    def normalize_data(self, data):
+        
+        normalize = data
 
         array_centroid = []
 
@@ -120,16 +158,29 @@ class Fuzzy:
         clusters = r_data["clusters"]
         return self.extract_data_frame(data), self.extract_clusters(clusters)
 
-    def extract_clusters(self, data):
-        raw_data = []
-        for i in data:
-            values = {}
-            for j in i["samples"]:
-                values.update(j)
-            raw_data.append(pd.DataFrame(
-                values, index=[str(i["lat"]) + ", " + str(i["long"])]))
+    def get_sample(self, data, qty_of_sensors, offset):
+        res = []
+        sample ={}
+        qty_of_sensors += offset
+        for i in range(offset, qty_of_sensors):
+            
+            sample['LAT'] = data[i]['lat']
+            sample['LONG'] = data[i]['long']
+            for j in data[i]['samples']:
+                sample.update(j)
+            res.append(sample)
+        return res
 
-        return raw_data
+    def extract_clusters(self, data, qty_of_sensors=3, limit=100):
+        samples = []
+        for i in range(limit):
+            sample = self.get_sample(data, qty_of_sensors, i)
+            
+            df = pd.DataFrame(sample)
+            df.set_index(['LAT', 'LONG'], inplace=True)
+            samples.append(df)
+
+        return samples
 
     def extract_data_frame(self, data):
         self.raw_data = pd.DataFrame()

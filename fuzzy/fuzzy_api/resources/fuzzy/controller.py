@@ -45,7 +45,7 @@ class FuzzyById(Resource):
             per, fpi, mpe = self.fuzzy_method.fuzzy3(data, samples)#clusters)
             return {"pertinencias": per, "fpi": fpi, "mpe": mpe}
         except Exception as e:
-            print(e)
+            
             return {"error": str(e)}, 500
 
 
@@ -62,12 +62,22 @@ class Fuzzy(Resource):
             return {"error": "Your token is invalid!"}, 401
 
         r = request.json
+        clusters = r['clusters']
+        data = r['data']
+        limit = r['limit']
+        qty_sensors = r['qty_sensors']
+        samples = clusters[0]['samples']
+        
+        #print(f"{limit} {len(clusters)/qty_sensors}", limit <= len(clusters)/qty_sensors)
 
-        data, clusters = self.fuzzy_method.extract_data_and_clusters(r)
+        if limit >= len(clusters)/qty_sensors:
+            return {"error_msg": "The quantity of clusters divided by qty_of_sensors must be less or equal than limit"}
+        
+        _data, _clusters = self.fuzzy_method.extract_data_frame(data), self.fuzzy_method.extract_clusters(clusters, qty_of_sensors=qty_sensors, limit=limit)
         
         try:
-            per, fpi, mpe = self.fuzzy_method.fuzzy3(data, clusters)
-            return {"pertinencias": per,"fpi": fpi, "mpe": mpe}
+            fpi, mpe = self.fuzzy_method.fuzzy3(_data, _clusters, qty_sensors, limit, nomal=True)
+            return {"fpi": fpi, "mpe": mpe}
         except Exception as e:
-            print(e)
+            
             return {"error": str(e)}, 501 
