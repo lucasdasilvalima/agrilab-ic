@@ -5,4 +5,4 @@ WORKDIR /app
 COPY . .
 RUN pip install -r requeriments.txt
 EXPOSE 5000
-CMD ["flask", "run", "--no-debugger"]
+CMD ["flask", "run"]

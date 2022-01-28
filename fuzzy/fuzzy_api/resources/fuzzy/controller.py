@@ -76,8 +76,8 @@ class Fuzzy(Resource):
         _data, _clusters = self.fuzzy_method.extract_data_frame(data), self.fuzzy_method.extract_clusters(clusters, qty_of_sensors=qty_sensors, limit=limit)
         
         try:
-            fpi, mpe = self.fuzzy_method.fuzzy3(_data, _clusters, qty_sensors, limit, nomal=True)
-            return {"fpi": fpi, "mpe": mpe}
+            fpi, mpe, r_value = self.fuzzy_method.fuzzy3(_data, _clusters, qty_sensors, limit, nomal=True)
+            return {'values': r_value, "local_by_fpi": fpi, "local_by_mpe": mpe}
         except Exception as e:
             
             return {"error": str(e)}, 501 
