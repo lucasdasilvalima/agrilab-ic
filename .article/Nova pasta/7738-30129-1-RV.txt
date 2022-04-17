@@ -1,0 +1,10 @@
+Na última linha do resumo está escrito “méto” deve ser “método”.
+Colocar as palavras em idioma inglês em itálico.
+Padronizar a escrita de PostgreSQL, ora está PL-SQL, ora está PLPG/SQL e ora PostgreSQL.
+Não fica claro na introdução o problema da pesquisa.
+Utilizar mais referências no texto, pois somente são utilizadas 5 autores, incluindo a referência de 1 dos autores.
+Definir as siglas no texto, pois um leitor leigo não vai entender o que é: CSV, YAML.
+Realizar revisão gramatical e ortográfica no texto todo.
+Qual o endereço de disponibilização do AGRIDATABOX? É citado no texto, mas não indica o repositório.
+Explorar mais os resultados e as conclusões. Poderiam ter detalhado mais.
+Quais seriam os "bons resultados" alcançados com o Fuzzy C-Means. Crie uma tabela comparativa das versões em Fuzzy e de PL-SQL. Isso vai dar um corpo ao trabalho e também vai justificar a migração de tecnologia.
