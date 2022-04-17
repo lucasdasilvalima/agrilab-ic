@@ -39,7 +39,7 @@ class Fuzzy:
         flag_ctrl=0
         for indice, cluster in enumerate(clusters):
             dists = pd.DataFrame()
-            for indice, row in cluster.iterrows():
+            for _indice, row in cluster.iterrows():
                 dist = pd.DataFrame()
                 for x in data.columns:
                     dist[x] = data[x]-row[x]
@@ -47,7 +47,7 @@ class Fuzzy:
 
                 dist = dist.sum(axis=1)
                 dist = dist.replace(0, self.zero)
-                dists[indice] = np.sqrt(dist)
+                dists[_indice] = np.sqrt(dist)
             pertinence = pd.DataFrame()
 
             for columns in dists.columns:
