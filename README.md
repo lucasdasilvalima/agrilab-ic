@@ -7,3 +7,6 @@ My favorite project! I did it in 2021 with my college friend [Maria](https://git
 ### Execute
 
 `start.sh`.
+
+
+- TODO OTHERS

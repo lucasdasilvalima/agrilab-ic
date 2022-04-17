@@ -1,10 +1,9 @@
-## How to use
+# My Projects in AGRILAB :)
 
-/fuzzy
+## Fuzzy project
 
-use exemplo.json
+My favorite project! I did it in 2021 with my college friend [Maria](https://github.com/mariagrandi). In this project, the API, built in python, provides access to the fuzzy cmeans method for implanting sensors in management zones.
 
-/fuzzy/id
+### Execute
 
-parse ids from your samples in AGDATABOX
-
+`start.sh`.

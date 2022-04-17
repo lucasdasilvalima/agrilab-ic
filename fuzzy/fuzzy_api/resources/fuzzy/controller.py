@@ -58,8 +58,8 @@ class Fuzzy(Resource):
     def post(self):
         api_key = request.headers.get("Authorization")
         
-        if not self.reqs.validate_auth(api_key):
-            return {"error": "Your token is invalid!"}, 401
+        #if not self.reqs.validate_auth(api_key):
+        #    return {"error": "Your token is invalid!"}, 401
 
         r = request.json
         clusters = r['clusters']
@@ -67,8 +67,6 @@ class Fuzzy(Resource):
         limit = r['limit']
         qty_sensors = r['qty_sensors']
         samples = clusters[0]['samples']
-        
-        #print(f"{limit} {len(clusters)/qty_sensors}", limit <= len(clusters)/qty_sensors)
 
         if limit >= len(clusters)/qty_sensors:
             return {"error_msg": "The quantity of clusters divided by qty_of_sensors must be less or equal than limit"}
@@ -76,7 +74,7 @@ class Fuzzy(Resource):
         _data, _clusters = self.fuzzy_method.extract_data_frame(data), self.fuzzy_method.extract_clusters(clusters, qty_of_sensors=qty_sensors, limit=limit)
         
         try:
-            fpi, mpe, r_value = self.fuzzy_method.fuzzy3(_data, _clusters, qty_sensors, limit, nomal=True)
+            fpi, mpe, r_value = self.fuzzy_method.fuzzy3(_data, _clusters, qty_sensors, limit, is_normalize=True)
             return {'values': r_value, "local_by_fpi": fpi, "local_by_mpe": mpe}
         except Exception as e:
             

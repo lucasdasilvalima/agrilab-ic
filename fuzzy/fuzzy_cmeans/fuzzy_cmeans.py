@@ -31,12 +31,12 @@ class Fuzzy:
         fpi *= (1 - pertinences.sum().sum())
         return fpi
 
-    def fuzzy3(self, data, clusters, qty_of_cluster, sample_size, nomal=True):
+    def fuzzy3(self, data, clusters, qty_of_cluster, sample_size, is_normalize=True):
         arr_fpi = {}
         arr_mpe = {}
         r_fpi = 0
         r_mpe = 0
-        abacaxi=0
+        flag_ctrl=0
         for indice, cluster in enumerate(clusters):
             dists = pd.DataFrame()
             for indice, row in cluster.iterrows():
@@ -63,16 +63,16 @@ class Fuzzy:
             fpi_index = self.fpi(pertinence, qty_of_cluster, sample_size)
             mpe_index = self.mpe(pertinence, qty_of_cluster, sample_size)
 
-            if abacaxi == 0:
+            if flag_ctrl == 0:
                 r_fpi = fpi_index
                 r_mpe = mpe_index
             if r_mpe > mpe_index:
                 r_mpe = mpe_index
             if r_fpi > fpi_index:
                 r_fpi = fpi_index
-            abacaxi += 1
-            arr_fpi[abacaxi] = str(indice)
-            arr_mpe[abacaxi] = str(indice)
+            flag_ctrl += 1
+            arr_fpi[flag_ctrl] = str(indice)
+            arr_mpe[flag_ctrl] = str(indice)
         
         return arr_fpi, arr_mpe, {'fpi_value': r_fpi, 'mpe_index': r_mpe}
 
