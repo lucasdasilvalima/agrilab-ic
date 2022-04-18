@@ -71,8 +71,8 @@ class Fuzzy:
             if r_fpi > fpi_index:
                 r_fpi = fpi_index
             flag_ctrl += 1
-            arr_fpi[flag_ctrl] = str(indice)
-            arr_mpe[flag_ctrl] = str(indice)
+            arr_fpi[flag_ctrl] = str(_indice)
+            arr_mpe[flag_ctrl] = str(_indice)
         
         return arr_fpi, arr_mpe, {'fpi_value': r_fpi, 'mpe_index': r_mpe}
 
